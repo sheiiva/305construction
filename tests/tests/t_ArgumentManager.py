@@ -13,6 +13,33 @@ import pytest
 from sources.ArgumentManager import ArgumentManager
 
 
+def test_needHelp_h_case():
+
+    argman = ArgumentManager()
+
+    argv = ['binary', '-h']
+
+    assert argman.needHelp(argv) is True
+
+
+def test_needHelp_help_case():
+
+    argman = ArgumentManager()
+
+    argv = ['binary', '--help']
+
+    assert argman.needHelp(argv) is True
+
+
+def test_needHelp_wrong_case():
+
+    argman = ArgumentManager()
+
+    argv = ['binary', 'no']
+
+    assert argman.needHelp(argv) is False
+
+
 def test_wrong_number_arg(capsys):
 
     argManager = ArgumentManager()
