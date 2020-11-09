@@ -18,8 +18,9 @@ SOURCES		=	sources/
 TESTS		=	tests/
 
 
-TESTS_SRC	=	$(TESTS)t_Usage.py					\
-				$(TESTS)t_ArgumentManager.py		\
+TESTS_SRC	=	$(TESTS)t_ArgumentManager.py	\
+				$(TESTS)t_Usage.py				\
+				$(TESTS)t_Task.py				\
 
 $(NAME):
 	@cp $(SOURCES)main.py $@
