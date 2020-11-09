@@ -14,7 +14,7 @@ from sys import argv
 
 from sources.Usage import Usage
 from sources.ArgumentManager import ArgumentManager
-# from sources.Pacman import Pacman
+from sources.Construction import Construction
 
 
 def main():
@@ -23,10 +23,10 @@ def main():
 
     if argsManager.needHelp(argv):
         Usage()
-    # elif argsManager.checkArgs(argv) == 84:
-    #     exit(84)
-    # else:
-    #     Pacman(argv[2], argv[3]).run(argv[1])
+    elif argsManager.checkArgs(argv) == 84:
+        exit(84)
+    else:
+        Construction().run(argv[1])
 
 
 if __name__ == "__main__":
