@@ -30,7 +30,7 @@ class Task():
     def parse(self, token: str) -> None:
 
         items = token.split(';')
-        if len(items) <= 3:
+        if len(items) < 3:
             print("ERROR: wrong file format.")
             return
         if isInt(items[2]) is False:
