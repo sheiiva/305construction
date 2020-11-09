@@ -40,6 +40,14 @@ def test_needHelp_wrong_case():
     assert argman.needHelp(argv) is False
 
 
+def test_normal_case():
+
+    argManager = ArgumentManager()
+    argv = ['./305construction', 'tests/deps/example', ]
+
+    assert argManager.checkArgs(argv) == 0
+
+
 def test_wrong_number_arg(capsys):
 
     argManager = ArgumentManager()
