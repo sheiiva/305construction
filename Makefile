@@ -19,8 +19,6 @@ TESTS		=	tests/
 
 
 TESTS_SRC	=	$(TESTS)t_Usage.py					\
-				$(TESTS)t_ArgumentManager.py		\
-				$(TESTS)t_Pacman.py		\
 
 $(NAME):
 	@cp $(SOURCES)main.py $@
