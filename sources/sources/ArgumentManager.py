@@ -11,6 +11,7 @@
 from os import stat
 from os.path import isfile
 
+
 class ArgumentManager():
 
     def checkArgs(self, argv) -> int:

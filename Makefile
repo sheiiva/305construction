@@ -19,6 +19,7 @@ TESTS		=	tests/
 
 
 TESTS_SRC	=	$(TESTS)t_ArgumentManager.py	\
+				$(TESTS)t_Construction.py		\
 				$(TESTS)t_Usage.py				\
 				$(TESTS)t_Task.py				\
 

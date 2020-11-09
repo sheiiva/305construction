@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 ############################################
 #                MATHEMATICS               #
 ############################################
@@ -9,25 +8,22 @@
 #                                          #
 ############################################
 
+import pytest
 
-from sys import argv
-
-from sources.Usage import Usage
-from sources.ArgumentManager import ArgumentManager
 from sources.Construction import Construction
 
 
-def main():
+def test_normal_case(capsys):
 
-    argsManager = ArgumentManager()
-
-    if argsManager.needHelp(argv):
-        Usage()
-    elif argsManager.checkArgs(argv) == 84:
-        exit(84)
-    else:
-        Construction().run(argv[1])
+    ction = Construction()
+    
+    assert ction.setTasks("tests/deps/example") == 0
+    assert len(ction._tasks) == 9
 
 
-if __name__ == "__main__":
-    main()
+def test_wrong_elem(capsys):
+
+    ction = Construction()
+    
+    assert ction.setTasks("tests/deps/wrongElem") == 84
+    assert len(ction._tasks) == 0
