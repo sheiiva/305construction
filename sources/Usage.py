@@ -4,7 +4,7 @@
 #                                          #
 #           COUTRET-ROZET Corentin         #
 #                                          #
-#            Project : 304pacman           #
+#          Project : 305construction       #
 #                                          #
 ############################################
 
@@ -20,12 +20,9 @@ class Usage():
         """
 
         print(
-            "./304pacman file c1 c2\n"
-            "\tfile\tfile describing the board, using the following characters:\n"
-            "\t\t\t‘0’ for an empty square,\n"
-            "\t\t\t‘1’ for a wall,\n"
-            "\t\t\t‘F’ for the ghost’s position,\n"
-            "\t\t\t‘P’ for Pacman’s position.\n"
-            "\tc1\tcharacter to display for a wall\n"
-            "\tc2\tcharacter to display for an empty space."
+            "USAGE\n"
+            "\t./305construction file\n"
+            "\n"
+            "DESCRIPTION\n"
+            "\tfile\tfile describing the tasks"
             )

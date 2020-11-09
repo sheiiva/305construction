@@ -12,18 +12,17 @@
 
 from sys import argv
 
-# from sources.Usage import Usage
-# from sources.ArgumentManager import ArgumentManager
+from sources.Usage import Usage
+from sources.ArgumentManager import ArgumentManager
 # from sources.Pacman import Pacman
 
 
 def main():
 
-    return
-    # argsManager = ArgumentManager()
+    argsManager = ArgumentManager()
 
-    # if argsManager.needHelp(argv):
-    #     Usage()
+    if argsManager.needHelp(argv):
+        Usage()
     # elif argsManager.checkArgs(argv) == 84:
     #     exit(84)
     # else:
