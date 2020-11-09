@@ -19,6 +19,7 @@ TESTS		=	tests/
 
 
 TESTS_SRC	=	$(TESTS)t_Usage.py					\
+				$(TESTS)t_ArgumentManager.py		\
 
 $(NAME):
 	@cp $(SOURCES)main.py $@
