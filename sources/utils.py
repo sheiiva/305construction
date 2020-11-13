@@ -26,3 +26,11 @@ def isInt(item) -> bool:
         return False
     else:
         return True
+
+
+def removeDup(myList: list) -> list:
+
+    res = []
+ 
+    [res.append(x) for x in myList if x not in res] 
+    return res

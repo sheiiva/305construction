@@ -8,8 +8,10 @@
 #                                          #
 ############################################
 
-from sources.Task import Task, KO
+from copy import deepcopy
 
+from sources.Task import Task, KO
+from sources.utils import removeDup
 
 class Construction():
 
@@ -19,17 +21,55 @@ class Construction():
 
     def __init__(self):
         self._tasks = []
+        self._totalDuration = 0
 
     def setTasks(self, filename: str) -> int:
 
         with open(filename, 'r') as f:
             for line in f:
+                line = line.replace('\n', '')
                 task = Task(line)
                 if (task._status == KO):
                     self._tasks.clear()
                     return 84
                 self._tasks.append(task)
         return 0
+
+    def getPrerequisites(self, taskName: str) -> list:
+
+        for task in self._tasks:
+            if task._id == taskName:
+                return deepcopy(task._prerequisites)
+        return []
+
+    def getFullPrerequisites(self, prerequisites: list) -> list:
+
+        newPrerequisites = deepcopy(prerequisites)
+
+        for prerequisite in prerequisites:
+            newPrerequisites += self.getPrerequisites(prerequisite)
+        newPrerequisites = removeDup(newPrerequisites)
+        return newPrerequisites
+
+    def setDependencies(self) -> None:
+
+        for task in self._tasks:
+            task._prerequisites = self.getFullPrerequisites(task._prerequisites)
+
+    def printOutput(self) -> None:
+
+        print("Total duration of construction: {} week{}".format(
+            self._totalDuration, 's' if self._totalDuration > 1 else ''
+        ))
+        print()
+        #
+        for task in self._tasks:
+            print("{} must begin".format(task._id))
+        #
+        print()
+        for task in self._tasks:
+            print("{}\t(0)\t".format(task._id), end='')
+            print("{}{}".format("", task._duration*'='))
 
     def run(self, filename: str) -> None:
 
@@ -40,7 +80,7 @@ class Construction():
         # Setup
         if self.setTasks(filename) == 84:
             exit(84)
-        # # Compute
-        # self.computeDijkstra(pacMap, 0, self._ghost._x, self._ghost._y)
+        # Compute
+        self.setDependencies()
         # # Print
-        # self.printOutput()
+        self.printOutput()
