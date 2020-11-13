@@ -73,38 +73,56 @@ class Construction():
         print()
         for task in self._tasks:
             print("{}\t(0)\t".format(task._id), end='')
-            print("{}{}".format("", task._duration*'='))
+            print("{}{}".format(" "*task._date[0], task._duration*'='))
 
-    def isSorted(self) -> bool:
 
-        for i in range(len(self._tasks)):
-            for j in range(len(self._tasks)):
-                if self._tasks[j]._id ==  self._tasks[i]._id:
-                    break
-                if self._tasks[i]._id in self._tasks[j]._prerequisites:
-                    return False
-        return True
+    def sortByDependencies(self) -> None:
 
-    def sortTasks(self) -> None:
+        def isSorted() -> bool:
 
-        while self.isSorted() is False:
             for i in range(len(self._tasks)):
                 for j in range(len(self._tasks)):
                     if self._tasks[j]._id ==  self._tasks[i]._id:
                         break
                     if self._tasks[i]._id in self._tasks[j]._prerequisites:
-                        tmp = self._tasks[i]
-                        self._tasks.pop(i)
-                        self._tasks.insert(0, tmp)
+                        return False
+            return True
+
+        while isSorted() is False:
+            for i in range(len(self._tasks)):
+                for j in range(len(self._tasks)):
+                    if self._tasks[j]._id ==  self._tasks[i]._id:
+                        break
+                    if self._tasks[i]._id in self._tasks[j]._prerequisites:
+                        self._tasks[i], self._tasks[j] = self._tasks[j], self._tasks[i]
         return
 
-    def computeStartDate(self):
+    def computeStartDate(self) -> None:
 
         for i in range(1, len(self._tasks)):
-            
-            self._tasks[i]._date[0] = self._tasks[i-1]._date[0] + self._tasks[i-1]._duration
+            if self._tasks[i-1]._id in self._tasks[i]._prerequisites:
+                self._tasks[i]._date[0] = self._tasks[i-1]._date[0] + self._tasks[i-1]._duration
+            else:
+                tmp = 0
+                for j in range(len(self._tasks)):
+                    if i == j:
+                        break
+                    if self._tasks[j]._id in self._tasks[i]._prerequisites:
+                        tmp = self._tasks[j]._date[0] + self._tasks[j]._duration
+                self._tasks[i]._date[0] = tmp
 
-        return
+    def sortByStartDate(self) -> None:
+
+        def isSorted() -> bool:
+            for i in range(1, len(self._tasks)):
+                if self._tasks[i]._date[0] < self._tasks[i-1]._date[0]:
+                    return False
+            return True
+
+        while isSorted() is False :
+            for i in range(1, len(self._tasks)):
+                if self._tasks[i]._date[0] < self._tasks[i-1]._date[0]:
+                    self._tasks[i], self._tasks[i-1] = self._tasks[i-1], self._tasks[i]
 
     def computeTotalDuration(self) -> None:
 
@@ -119,11 +137,11 @@ class Construction():
         # Setup
         if self.setTasks(filename) == 84:
             exit(84)
-        # Compute
         self.setDependencies()
-        self.sortTasks()
+        # Compute
+        self.sortByDependencies()
         self.computeStartDate()
-
+        self.sortByStartDate()
         self.computeTotalDuration()
         # # Print
         self.printOutput()
