@@ -64,7 +64,11 @@ class Construction():
         print()
         #
         for task in self._tasks:
-            print("{} must begin".format(task._id))
+            print("{} must begin".format(task._id), end='')
+            if len(task._date) > 1:
+                print(" between t={} and t={}".format(task._date[0], task._date[-1]))
+            else:
+                print(" at t={}".format(task._date[0]))
         #
         print()
         for task in self._tasks:
@@ -81,7 +85,7 @@ class Construction():
                     return False
         return True
 
-    def sortTasks(self):
+    def sortTasks(self) -> None:
 
         while self.isSorted() is False:
             for i in range(len(self._tasks)):
@@ -93,6 +97,18 @@ class Construction():
                         self._tasks.pop(i)
                         self._tasks.insert(0, tmp)
         return
+
+    def computeStartDate(self):
+
+        for i in range(1, len(self._tasks)):
+            
+            self._tasks[i]._date[0] = self._tasks[i-1]._date[0] + self._tasks[i-1]._duration
+
+        return
+
+    def computeTotalDuration(self) -> None:
+
+        self._totalDuration = self._tasks[-1]._date[0] + self._tasks[-1]._duration
 
     def run(self, filename: str) -> None:
 
@@ -106,5 +122,8 @@ class Construction():
         # Compute
         self.setDependencies()
         self.sortTasks()
+        self.computeStartDate()
+
+        self.computeTotalDuration()
         # # Print
         self.printOutput()
