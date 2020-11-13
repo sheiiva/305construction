@@ -65,14 +65,16 @@ class Construction():
         #
         for task in self._tasks:
             print("{} must begin".format(task._id), end='')
-            if len(task._date) > 1:
+            if len(task._date) > 1 and task._date[0] != task._date[1]:
                 print(" between t={} and t={}".format(task._date[0], task._date[-1]))
             else:
                 print(" at t={}".format(task._date[0]))
         #
         print()
         for task in self._tasks:
-            print("{}\t(0)\t".format(task._id), end='')
+            print("{}\t({})\t".format(task._id,
+                task._date[-1] - task._date[0] if len(task._date) > 1 else 0
+            ), end='')
             print("{}{}".format(" "*task._date[0], task._duration*'='))
 
 
@@ -128,6 +130,19 @@ class Construction():
 
         self._totalDuration = self._tasks[-1]._date[0] + self._tasks[-1]._duration
 
+    def computeTimes(self) -> None:
+
+        for i in range(len(self._tasks)):
+            used = False
+            for j in range(i, len(self._tasks)):
+                if self._tasks[i]._id in self._tasks[j]._prerequisites:
+                    self._tasks[i]._date.append(self._tasks[j]._date[0] - self._tasks[i]._duration)
+                    used = True
+                    break
+            if used == False:
+                self._tasks[i]._date.append(self._totalDuration - self._tasks[i]._duration)
+            
+                
     def run(self, filename: str) -> None:
 
         """
@@ -143,5 +158,6 @@ class Construction():
         self.computeStartDate()
         self.sortByStartDate()
         self.computeTotalDuration()
+        self.computeTimes()
         # # Print
         self.printOutput()
