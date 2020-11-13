@@ -11,14 +11,16 @@
 import pytest
 
 from sources.Construction import Construction
+from tests.deps.expected import *
 
 
 def test_normal_case(capsys):
 
-    ction = Construction()
-    
-    assert ction.setTasks("tests/deps/example") == 0
-    assert len(ction._tasks) == 9
+    Construction().run("tests/deps/example")
+
+    redir = capsys.readouterr()
+
+    assert redir.out == NORMAL_CASE_OUTPUT
 
 
 def test_wrong_elem(capsys):
