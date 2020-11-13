@@ -22,6 +22,7 @@ class Task():
         self._description = ""
         self._duration = -1
         self._prerequisites = []
+        self._date = [0]
         #
         self._status = KO
         #
