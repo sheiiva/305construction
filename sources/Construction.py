@@ -13,6 +13,7 @@ from copy import deepcopy
 from sources.Task import Task, KO
 from sources.utils import removeDup
 
+
 class Construction():
 
     """
@@ -72,11 +73,11 @@ class Construction():
         #
         print()
         for task in self._tasks:
-            print("{}\t({})\t".format(task._id,
+            print("{}\t({})\t".format(
+                task._id,
                 task._date[-1] - task._date[0] if len(task._date) > 1 else 0
             ), end='')
             print("{}{}".format(" "*task._date[0], task._duration*'='))
-
 
     def sortByDependencies(self) -> None:
 
@@ -84,7 +85,7 @@ class Construction():
 
             for i in range(len(self._tasks)):
                 for j in range(len(self._tasks)):
-                    if self._tasks[j]._id ==  self._tasks[i]._id:
+                    if self._tasks[j]._id == self._tasks[i]._id:
                         break
                     if self._tasks[i]._id in self._tasks[j]._prerequisites:
                         return False
@@ -93,7 +94,7 @@ class Construction():
         while isSorted() is False:
             for i in range(len(self._tasks)):
                 for j in range(len(self._tasks)):
-                    if self._tasks[j]._id ==  self._tasks[i]._id:
+                    if self._tasks[j]._id == self._tasks[i]._id:
                         break
                     if self._tasks[i]._id in self._tasks[j]._prerequisites:
                         self._tasks[i], self._tasks[j] = self._tasks[j], self._tasks[i]
@@ -121,7 +122,7 @@ class Construction():
                     return False
             return True
 
-        while isSorted() is False :
+        while isSorted() is False:
             for i in range(1, len(self._tasks)):
                 if self._tasks[i]._date[0] < self._tasks[i-1]._date[0]:
                     self._tasks[i], self._tasks[i-1] = self._tasks[i-1], self._tasks[i]
@@ -139,10 +140,9 @@ class Construction():
                     self._tasks[i]._date.append(self._tasks[j]._date[0] - self._tasks[i]._duration)
                     used = True
                     break
-            if used == False:
+            if used is False:
                 self._tasks[i]._date.append(self._totalDuration - self._tasks[i]._duration)
-            
-                
+
     def run(self, filename: str) -> None:
 
         """
