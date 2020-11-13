@@ -71,6 +71,29 @@ class Construction():
             print("{}\t(0)\t".format(task._id), end='')
             print("{}{}".format("", task._duration*'='))
 
+    def isSorted(self) -> bool:
+
+        for i in range(len(self._tasks)):
+            for j in range(len(self._tasks)):
+                if self._tasks[j]._id ==  self._tasks[i]._id:
+                    break
+                if self._tasks[i]._id in self._tasks[j]._prerequisites:
+                    return False
+        return True
+
+    def sortTasks(self):
+
+        while self.isSorted() is False:
+            for i in range(len(self._tasks)):
+                for j in range(len(self._tasks)):
+                    if self._tasks[j]._id ==  self._tasks[i]._id:
+                        break
+                    if self._tasks[i]._id in self._tasks[j]._prerequisites:
+                        tmp = self._tasks[i]
+                        self._tasks.pop(i)
+                        self._tasks.insert(0, tmp)
+        return
+
     def run(self, filename: str) -> None:
 
         """
@@ -82,5 +105,6 @@ class Construction():
             exit(84)
         # Compute
         self.setDependencies()
+        self.sortTasks()
         # # Print
         self.printOutput()
